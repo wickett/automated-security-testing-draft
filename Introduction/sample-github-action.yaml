@@ -1,0 +1,29 @@
+name: Action Example with Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run Security Scan
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      
+      - name: Install Security Tools
+        run: |
+          pip install bandit
+          
+      - name: Bandit Security Scan
+        run: |
+          bandit -r .
